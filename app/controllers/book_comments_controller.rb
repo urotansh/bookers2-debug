@@ -14,6 +14,8 @@ class BookCommentsController < ApplicationController
     redirect_to request.referer
   end
   
+  private
+  
   def book_comment_params
     params.require(:book_comment).permit(:comment)
   end
