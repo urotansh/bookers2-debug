@@ -15,6 +15,7 @@
       <div class="row justify-content-center my-3">
         <%= form_with url: searches_path, local: true, method: :get do |f| %>
           <%= f.text_field :name %>
+          <%= f.select :search, {"完全一致": "perfect_match", "前方一致": "forward_match", "後方一致": "backward_match", "部分一致": "partial_match"} %>
           <%= f.submit '検索' %>
         <% end %>
       </div>
