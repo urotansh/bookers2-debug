@@ -10,6 +10,16 @@
   </head>
   <body>
     <%= render 'layouts/header' %>
+    <% if user_signed_in? %>
+      <div class="container">
+      <div class="row justify-content-center my-3">
+        <%= form_with url: searches_path, local: true, method: :get do |f| %>
+          <%= f.text_field :name %>
+          <%= f.submit '検索' %>
+        <% end %>
+      </div>
+      </div>
+    <% end %>
       <main>
         <p id="notice"><%= notice %></p>
         <%= yield %>
