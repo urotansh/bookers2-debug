@@ -1,28 +1,39 @@
 class SearchesController < ApplicationController
   
   def search
-    @keyword = params[:name]
+    @keyword = params[:keyword]
+    target = params[:target]
     search = params[:search]
+    obj = Object.const_get(target)
+    
+    # カラム名の設定
+    if obj.name == "User"
+      column = "name"
+    elsif obj.name == "Book"
+      column = "title"
+    else
+      redirect_to request.referer
+    end
     
     if @keyword.present?
       # 完全一致検索
       if search == "perfect_match"
-        @users = User.where(name: @keyword)
+        @results = obj.where("#{column}": @keyword)
       # 前方一致検索
       elsif search == "forward_match"
-        @users = User.where('name LIKE ?', "#{@keyword}%")
+        @results = obj.where("#{column} LIKE ?", "#{@keyword}%")
       # 後方一致検索
       elsif search == "backward_match"
-        @users = User.where('name LIKE ?', "%#{@keyword}")
+        @results = obj.where("#{column} LIKE ?", "%#{@keyword}")
       # 部分一致検索
       elsif search == "partial_match"
-        @users = User.where('name LIKE ?', "%#{@keyword}%")
+        @results = obj.where("#{column} LIKE ?", "%#{@keyword}%")
       # それ以外
       else
-        @users = User.none
+        @results = obj.none
       end
     else
-      @users = User.none
+      @results = obj.none
     end
   end
   

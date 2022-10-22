@@ -1,3 +1,4 @@
+<% if books.exists? %>
 <table class='table table-hover table-inverse'>
   <thead>
     <tr>
@@ -35,9 +36,12 @@
           <% end %>
         </td>
         <td>
-          コメント数：<%= book.book_comments.count %>
+          コメント数:<%= book.book_comments.count %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<% else %>
+  <p>投稿は存在しません</p>
+<% end %>
