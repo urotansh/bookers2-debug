@@ -23,15 +23,7 @@
             <%= @book.body %>
           </td>
           <td>
-          <% if @book.favorited_by?(current_user) %>
-            <%= link_to(book_favorites_path(@book.id), method: :delete, class: "text-danger") do %>
-              <i class="fas fa-heart" style="color: red;" ></i><%= @book.favorites.count %>
-            <% end %>
-          <% else %>
-            <%= link_to(book_favorites_path(@book.id), method: :post, class: "text-primary") do %>
-              <i class="fas fa-heart" ></i><%= @book.favorites.count %>
-            <% end %>
-          <% end %>
+            <%= render 'favorites/favorite-btn', book: @book %>
           </td>
           <td>
             コメント数:<%= @book.book_comments.count %>
