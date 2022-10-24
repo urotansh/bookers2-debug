@@ -5,13 +5,17 @@ class BookCommentsController < ApplicationController
     comment.user_id = current_user.id
     comment.book_id = params[:book_id]
     comment.save
-    redirect_to request.referer
+    
+    # *.js.erbで参照するインスタンス
+    @book = Book.find(params[:book_id])
   end
   
   def destroy
     comment = BookComment.find(params[:id])
     comment.destroy
-    redirect_to request.referer
+    
+    # *.js.erbで参照するインスタンス
+    @book = Book.find(params[:book_id])
   end
   
   private
