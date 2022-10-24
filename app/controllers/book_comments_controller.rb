@@ -1,11 +1,13 @@
 class BookCommentsController < ApplicationController
   
   def create
-    comment = BookComment.new(book_comment_params)
-    comment.user_id = current_user.id
-    comment.book_id = params[:book_id]
-    comment.save
-    
+    @comment = BookComment.new(book_comment_params)
+    @comment.user_id = current_user.id
+    @comment.book_id = params[:book_id]
+    unless @comment.save
+      render 'error'
+    end
+      
     # *.js.erbで参照するインスタンス
     @book = Book.find(params[:book_id])
   end
