@@ -11,7 +11,7 @@
     </tr>
   </thead>
   <tbody>
-    <% books.each do |book| %>
+    <% books.sort_by{ |book| -(book.favorites.size) }.each do |book| %>
       <tr>
         <td>
           <%= link_to(book.user) do %>

@@ -8,8 +8,13 @@ before_action :is_matching_login_user, only: [:edit, :update]
   end
 
   def index
+    # side_menu
     @book = Book.new
+    
+    # main_menu
     @books = Book.all
+    # スコープの設定 favoritesテーブルからcreated_atが1週間以内のデータのみ取得してpreload(キャッシュ)する
+    ActiveRecord::Associations::Preloader.new.preload(@books, :favorites, Favorite.where('created_at > ?', Time.current.ago(7.day)))
   end
 
   def create
