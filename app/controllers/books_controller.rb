@@ -4,6 +4,9 @@ before_action :is_matching_login_user, only: [:edit, :update]
   def show
     @book_new = Book.new
     @book = Book.find(params[:id])
+    # スコープの設定 favoritesテーブルからcreated_atが1週間以内のデータのみ取得してpreload(キャッシュ)する
+    ActiveRecord::Associations::Preloader.new.preload(@book, :favorites, Favorite.where(created_at: ((Time.current.at_end_of_day - 6.day).at_beginning_of_day)..(Time.current.at_end_of_day)))
+
     @book_comment = BookComment.new
   end
 
